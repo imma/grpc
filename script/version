@@ -4,7 +4,7 @@ function version {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  local ver_protoc="$(protoc 2>/dev/null | awk '{print $2}' || true)"
+  local ver_protoc="$(protoc --version 2>/dev/null | awk '{print $2}' || true)"
   jq -n --arg protoc "$ver_protoc" '{protoc: $protoc}'
 }
 
