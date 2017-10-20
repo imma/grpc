@@ -4,7 +4,26 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  uname -a
+  export GOPATH="$shome"
+
+  local url_protoc_Linux="https://github.com/google/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip"
+  local url_protoc_Darwin="https://github.com/google/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-osx-x86_64.zip"
+
+  local url_protoc="url_protoc_$(uname -s)"
+  local fnm_protoc="$(basename "${!url_protoc}")"
+  cache curl "$fnm_protoc" "${!url_protoc}"
+
+  mkdir -p "$shome/vendor/protoc-${PROTOC_VERSION}"
+  pushd "$shome/vendor/protoc-${PROTOC_VERSION}"
+  unzip "${BASEBOX_CACHE}/curl/$fnm_protoc"
+  popd
+
+  ln -nfs "protoc-${PROTOC_VERSION}" "$shome/vendor/protoc"
+  mkdir -p "$shome/bin"
+  ln -nfs ../vendor/protoc/bin/protoc "$shome/bin/"
+
+  go get google.golang.org/grpc
+  go get -u github.com/golang/protobuf/protoc-gen-go
 }
 
 main "$@"

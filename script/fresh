@@ -4,7 +4,11 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  if [[ "$($shome/script/version | jq -r '.grpc')" != "$GRPC_VERSION" ]]; then
+  if [[ "$($shome/script/version | jq -r '.protoc')" != "$PROTOC_VERSION" ]]; then
+    return 1
+  fi
+
+  if ! type -P protoc-gen-go >/dev/null; then
     return 1
   fi
 

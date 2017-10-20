@@ -1,0 +1,5 @@
+/bin/protoc
+/bin/protoc-gen-go
+/src
+/pkg
+/vendor
