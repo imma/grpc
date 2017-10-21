@@ -15,7 +15,7 @@ function main {
 
   mkdir -p "$shome/vendor/protoc-${PROTOC_VERSION}"
   pushd "$shome/vendor/protoc-${PROTOC_VERSION}"
-  unzip -f "${BASEBOX_CACHE}/curl/$fnm_protoc"
+  unzip -o "${BASEBOX_CACHE}/curl/$fnm_protoc"
   popd
 
   ln -nfs "protoc-${PROTOC_VERSION}" "$shome/vendor/protoc"
