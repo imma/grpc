@@ -24,11 +24,6 @@ function main {
 
   go get google.golang.org/grpc
   go get -u github.com/golang/protobuf/protoc-gen-go
-
-  case "${DISTRIB_ID}" in
-    Darwin) true ;;
-    *) block compile virtualenv ;;
-  esac
 }
 
 main "$@"
