@@ -6,12 +6,15 @@ function main {
   export GOPATH="$shome"
   PATH="$shome/bin:$PATH"
 
-  go get -u google.golang.org/grpc/examples/helloworld/greeter_client
-  go get -u google.golang.org/grpc/examples/helloworld/greeter_server
+  local pth_example="google.golang.org/grpc/examples/helloworld"
 
-  bin/greeter_server &
+  go get -u   "${pth_example}/greeter_client"
+  go get -u   "${pth_example}/greeter_server"
+  go generate "${pth_example}/..."
+
+  "$shome/bin/greeter_server" &
   sleep 1
-  bin/greeter_client
+  "$shome/bin/greeter_client"
   exec 2>/dev/null
   pkill greeter_server
   wait
