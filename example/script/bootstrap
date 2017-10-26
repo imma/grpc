@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+function main {
+  local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
+
+  export GOPATH="$shome"
+  PATH="$shome/bin:$PATH"
+
+  go get -u google.golang.org/grpc/examples/helloworld/greeter_client
+  go get -u google.golang.org/grpc/examples/helloworld/greeter_server
+
+  bin/greeter_server &
+  sleep 1
+  bin/greeter_client
+  exec 2>/dev/null
+  pkill greeter_server
+  wait
+}
+
+main "$@"
