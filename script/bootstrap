@@ -19,9 +19,6 @@ function main {
   ln -nfs "protoc-${PROTOC_VERSION}" "$shome/vendor/protoc"
   mkdir -p "$shome/bin"
   ln -nfs ../vendor/protoc/bin/protoc "$shome/bin/"
-
-  cd "$shome"
-  block compile pipenv
 }
 
 main "$@"
